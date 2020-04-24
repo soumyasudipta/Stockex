@@ -19,8 +19,8 @@ def main():
 schedule.every(1).minutes.do(main) 
 
 if __name__ == "__main__":
-    count = 0 
-    while True: 
-        schedule.run_pending() 
-        time.sleep(1)
-
+    # count = 0 
+    # while True: 
+    #     schedule.run_pending() 
+    #     time.sleep(1)
+    main()
