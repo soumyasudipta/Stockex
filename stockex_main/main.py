@@ -7,10 +7,12 @@ from pymongo import MongoClient
 
 # import yahoofinance.historical as historical
 import yahoofinance.yahoofinance_manager as yahoofinance_manager
+import mongodb.connection as connection
 
-import mongodb.mongodatabase
+# import mongodb.mongodatabase
 
 def main():
+    connection.establish_connection()
     yahoofinance_manager.initiate()
     print('Inside main')
 

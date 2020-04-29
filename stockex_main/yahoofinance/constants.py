@@ -10,3 +10,20 @@ symbols = ['ATVI','ADBE','AMD','ALXN','ALGN','GOOGL','GOOG','AMZN','AAL','AMGN',
             'ROST','SGEN','SIRI','SWKS','SPLK','SBUX','SNPS','TMUS','TTWO','TSLA',
             'TXN','TCOM','ULTA','UAL','VRSN','VRSK','VRTX','WBA','WDAY','WDC',
             'WLTW','XEL','XLNX']
+
+
+
+# Ticker period
+period_1d = '1d'
+period_5d = '5d'
+period_1mo = '1mo'
+period_3mo = '3mo'
+period_6mo = '6mo'
+period_1y = '1y'
+period_5y = '5y'
+period_ytd = 'ytd'
+period_max = 'max'
+
+# Ticker interval
+interval_1d = '1d'
+interval_1m = '1m'

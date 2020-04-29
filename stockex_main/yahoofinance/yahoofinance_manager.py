@@ -5,17 +5,18 @@ import logging
 import pandas as pd
 
 # Import userdefined libraries
-import mongodb.mongodatabase as mdb
-from yahoofinance.constants import symbols
+from mongodb.constants import database_name
+import mongodb.database_manager as mdb
+from yahoofinance.constants import *
 
 # Initialize
-def ticker_do(symbol_list):
+def get_ticker(symbol_list,ticker_period,ticker_interval):
 
     try:
         ticker_data = yf.download(
             tickers = symbol_list,
-            period = "6mo",
-            interval = "1d",
+            period = ticker_period,
+            interval = ticker_interval,
             group_by = 'ticker',
             auto_adjust = True,
             prepost = True,
@@ -23,9 +24,10 @@ def ticker_do(symbol_list):
             proxy = None)
 
         for x in symbols:
+            print("Insertion started for : " + x, sep = " || ")
             insert_data = []
             for index, row in ticker_data[str(x)].iterrows():
-                date_time = str(index)
+                date_time = str(index)[0:19]
                 pattern = '%Y-%m-%d %H:%M:%S'
                 epoch = int(time.mktime(time.strptime(date_time, pattern)))
 
@@ -41,14 +43,14 @@ def ticker_do(symbol_list):
 
                 insert_data.append(data)
 
-            mdb.insert(insert_data,'monthyly_6',str(x))
+            mdb.insert(insert_data,database_name,ticker_period)
+            print("Insertion ended for : " + x)
     
     except Exception:
         print("Cannot connect to network")
         logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(x + " : " + Exception)
+        logging.warning(x + " : " + str(Exception))
 
-    print("Insertion ended for : " + x)
 
 # Initialize
 def initiate():
@@ -57,4 +59,12 @@ def initiate():
     for x in symbols:
         symbol_list = symbol_list + " " + x
 
-    ticker_do(symbol_list)
+    get_ticker(symbol_list, period_1d, interval_1m)
+    get_ticker(symbol_list, period_5d, interval_1m)
+    get_ticker(symbol_list, period_1mo, interval_1d)
+    get_ticker(symbol_list, period_3mo, interval_1d)
+    get_ticker(symbol_list, period_6mo, interval_1d)
+    get_ticker(symbol_list, period_1y, interval_1d)
+    get_ticker(symbol_list, period_5y, interval_1d)
+    get_ticker(symbol_list, period_ytd, interval_1d)
+    get_ticker(symbol_list, period_max, interval_1d)
