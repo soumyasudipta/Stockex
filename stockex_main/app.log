@@ -1,2 +1,2 @@
-root - WARNING - ATVI : <class 'Exception'>
-root - WARNING - ATVI : <class 'Exception'>
+root - WARNING - '>' not supported between instances of 'int' and 'NoneType'
+root - WARNING - '>' not supported between instances of 'int' and 'NoneType'

@@ -1,20 +1,29 @@
 import time
 import schedule
+import os
 
-# import yahoofinance.historical as historical
 import yahoofinance.yahoofinance_manager as yahoofinance_manager
 
 from yahoofinance.constants import *
 
 
 def minute_job():
+
     print('Started the minute wise job')
     yahoofinance_manager.initiate(period_1d, interval_1m, offset_1m)
     yahoofinance_manager.initiate(period_5d, interval_1m, offset_1m)
     print('Stopped the minute wise job')
 
 
-def daily_job():
+def daily_delete_job():
+
+    print('Started the daily wise job')
+    yahoofinance_manager.change_ticker(interval_1d)
+    print('Stopped the daily wise job')
+
+
+def daily_insert_job():
+
     print('Started the daily wise job')
     yahoofinance_manager.initiate(period_1mo, interval_1d, offset_1d)
     yahoofinance_manager.initiate(period_3mo, interval_1d, offset_1d)
@@ -27,12 +36,26 @@ def daily_job():
 
 
 if __name__ == "__main__":
+    os.environ['TZ'] = 'America/Detroit'
+    time.tzset()
+
     # Task scheduling 
-    # After every 10mins geeks() is called. 
+    # After every min minute_job() is called.
     schedule.every().minute.do(minute_job)
 
-    # # Every day at 12am or 00:00 time bedtime() is called. 
-    schedule.every().day.at("00:00").do(daily_job)
+    # # From Monday to Friday at 9:25am time daily_deletion() is called.
+    schedule.every().monday.at("09:25").do(daily_delete_job)
+    schedule.every().tuesday.at("09:25").do(daily_delete_job)
+    schedule.every().wednesday.at("09:25").do(daily_delete_job)
+    schedule.every().thursday.at("09:25").do(daily_delete_job)
+    schedule.every().friday.at("09:25").do(daily_delete_job)
+
+    # # From Monday to Friday at 12am or 00:00 time daily_job() is called.
+    schedule.every().monday.at("00:00").do(daily_insert_job)
+    schedule.every().tuesday.at("00:00").do(daily_insert_job)
+    schedule.every().wednesday.at("00:00").do(daily_insert_job)
+    schedule.every().thursday.at("00:00").do(daily_insert_job)
+    schedule.every().friday.at("00:00").do(daily_insert_job)
 
     # # Loop so that the scheduling task 
     # keeps on running all time. 
@@ -41,4 +64,3 @@ if __name__ == "__main__":
         # is pending to run or not 
         schedule.run_pending()
         time.sleep(1)
-    # read_last_timestamp(database_name, period_1d)
