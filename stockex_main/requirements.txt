@@ -1,2 +1,5 @@
-pip install yfinance
-pip install time
+schedule~=0.6.0
+pymongo~=3.10.1
+yfinance~=0.1.54
+pandas~=1.0.1
+numpy~=1.18.1

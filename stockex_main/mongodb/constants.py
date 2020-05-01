@@ -1,2 +1,5 @@
-connection_string = 'mongodb+srv://stockex-mainserver:Soumya%401902@stockexcluster-1m7qb.gcp.mongodb.net/test?retryWrites=true&w=majority'
+username = 'stockex-mainserver'
+password = 'yLXLdxUHvfcxsosO'
+# connection_string = 'mongodb+srv://' + username + ':' + password + '@stockexcluster-beopo.gcp.mongodb.net/test?retryWrites=true&w=majority'
+connection_string = 'localhost:27017'
 database_name = 'stockex'
