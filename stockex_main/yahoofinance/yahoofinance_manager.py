@@ -5,6 +5,7 @@ import logging
 from mongodb.constants import database_name
 import mongodb.database_manager as mdb
 from yahoofinance.constants import symbols
+from logger import logging_manager
 
 
 # Initialize
@@ -21,7 +22,7 @@ def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
             threads=True,
             proxy=None)
 
-        print("Insertion started", sep=" || ")
+        print("Insertion started for : " + ticker_period, sep=" || ")
 
         for symbol in list(ticker_data.columns.levels[0]):
 
@@ -32,7 +33,7 @@ def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
                 pattern = '%Y-%m-%d %H:%M:%S'
                 epoch = int(time.mktime(time.strptime(date_time, pattern)))
 
-                if (epoch > last_timestamp) or (last_timestamp is None):
+                if (epoch > last_timestamp) or (last_timestamp == 0):
                     data = {
                         '_id': symbol + '-' + str(epoch),
                         'symbol': str(symbol),
@@ -49,12 +50,10 @@ def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
         if len(data_to_insert) > 0:
             mdb.write_to_database(data_to_insert, database_name, ticker_period)
 
-        print("Insertion ended")
+        print("Insertion ended for : " + ticker_period)
 
     except Exception as e:
-        print(e)
-        logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(str(e))
+        logging_manager.logging_do(e, 40)
 
 
 def change_ticker(ticker_period):

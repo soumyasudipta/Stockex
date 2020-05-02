@@ -1,4 +1,5 @@
 import time
+import datetime
 import schedule
 import os
 
@@ -8,7 +9,6 @@ from yahoofinance.constants import *
 
 
 def minute_job():
-
     print('Started the minute wise job')
     yahoofinance_manager.initiate(period_1d, interval_1m, offset_1m)
     yahoofinance_manager.initiate(period_5d, interval_1m, offset_1m)
@@ -16,14 +16,12 @@ def minute_job():
 
 
 def daily_delete_job():
-
     print('Started the daily wise job')
     yahoofinance_manager.change_ticker(interval_1d)
     print('Stopped the daily wise job')
 
 
 def daily_insert_job():
-
     print('Started the daily wise job')
     yahoofinance_manager.initiate(period_1mo, interval_1d, offset_1d)
     yahoofinance_manager.initiate(period_3mo, interval_1d, offset_1d)
@@ -39,10 +37,19 @@ if __name__ == "__main__":
     os.environ['TZ'] = 'America/Detroit'
     time.tzset()
 
-    # Task scheduling 
-    # After every min minute_job() is called.
-    schedule.every().minute.do(minute_job)
+    now = datetime.datetime.now()
+    current_time = int(now.strftime("%H")) * 60 + int(now.strftime("%M"))
+    start = 9 * 60 + 25
+    stop = 16 * 60 + 5
 
+    if start < current_time < stop:
+        # After every min minute_job() is called.
+        schedule.every().minute.do(minute_job)
+        print(current_time)
+        print(start)
+        print(stop)
+
+    # Task scheduling
     # # From Monday to Friday at 9:25am time daily_deletion() is called.
     schedule.every().monday.at("09:25").do(daily_delete_job)
     schedule.every().tuesday.at("09:25").do(daily_delete_job)

@@ -1,5 +1,5 @@
 # Import global libraries
-import logging
+from logger import logging_manager
 from pymongo import MongoClient
 from pymongo import errors
 
@@ -11,23 +11,15 @@ from mongodb.constants import connection_string
 def establish_connection():
     try:
         client = MongoClient(connection_string)
-        print('Connection Opened')
         return client
 
     except errors.WriteError as e:
-        logging.basicConfig(filename='app.log',
-                            filemode='w',
-                            format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(e)
+        logging_manager.logging_do(e, 40)
 
 
 def end_connection(client):
     try:
         client.close()
-        print('Connection Closed')
 
     except errors.WriteError as e:
-        logging.basicConfig(filename='app.log',
-                            filemode='w',
-                            format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(e)
+        logging_manager.logging_do(e, 40)

@@ -1,5 +1,5 @@
-import logging
 from pymongo import errors
+from logger import logging_manager
 import mongodb.connection as connection
 
 
@@ -12,10 +12,7 @@ def write_to_database(data, database_name, collection_name):
         connection.end_connection(client)
 
     except errors.WriteError as e:
-        logging.basicConfig(filename='app.log',
-                            filemode='w',
-                            format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(e)
+        logging_manager.logging_do(e, 40)
 
 
 def drop_collection(database_name, collection_name):
@@ -25,16 +22,13 @@ def drop_collection(database_name, collection_name):
         connection.end_connection(client)
 
     except errors.WriteError as e:
-        logging.basicConfig(filename='app.log',
-                            filemode='w',
-                            format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(e)
+        logging_manager.logging_do(e, 40)
 
 
 def read_from_database(symbol, database_name, collection_name):
     try:
 
-        cursor = None
+        cursor = 0
         client = connection.establish_connection()
 
         if collection_name in client[database_name].list_collection_names():
@@ -48,7 +42,4 @@ def read_from_database(symbol, database_name, collection_name):
         return cursor
 
     except errors.WriteError as e:
-        logging.basicConfig(filename='app.log',
-                            filemode='w',
-                            format='%(name)s - %(levelname)s - %(message)s')
-        logging.warning(e)
+        logging_manager.logging_do(e, 40)
