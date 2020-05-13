@@ -7,12 +7,12 @@ def write_to_database(data, database_name, collection_name):
     try:
         client = connection.establish_connection()
         client[database_name][collection_name].insert_many(data,
-                                                           ordered=False,
-                                                           session=None)
+                                                           ordered=False)
         connection.end_connection(client)
 
     except errors.WriteError as e:
         logging_manager.logging_do(e, 40)
+        print(e)
 
 
 def drop_collection(database_name, collection_name):

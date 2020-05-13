@@ -9,7 +9,7 @@ from logger import logging_manager
 
 
 # Initialize
-def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
+def get_ticker(symbol_list, ticker_period, ticker_interval):
     try:
         data_to_insert = []
 
@@ -19,8 +19,7 @@ def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
             interval=ticker_interval,
             group_by='ticker',
             auto_adjust=True,
-            threads=True,
-            proxy=None)
+            threads=32)
 
         print("Insertion started for : " + ticker_period, sep=" || ")
 
@@ -28,12 +27,12 @@ def get_ticker(symbol_list, ticker_period, ticker_interval, offset_value):
 
             last_timestamp = mdb.read_from_database(symbol, database_name, ticker_period)
 
-            for index, row in ticker_data.dropna()[str(symbol)][:-offset_value].iterrows():
+            for index, row in ticker_data[str(symbol)].dropna().iterrows():
                 date_time = str(index)[0:19]
                 pattern = '%Y-%m-%d %H:%M:%S'
                 epoch = int(time.mktime(time.strptime(date_time, pattern)))
 
-                if (epoch > last_timestamp) or (last_timestamp == 0):
+                if last_timestamp == 0 or last_timestamp < epoch:
                     data = {
                         '_id': symbol + '-' + str(epoch),
                         'symbol': str(symbol),
@@ -61,7 +60,7 @@ def change_ticker(ticker_period):
 
 
 # Initialize
-def initiate(ticker_period, ticker_interval, offset_value):
+def initiate(ticker_period, ticker_interval):
     symbol_string = ' '.join([str(symbol) for symbol in symbols])
 
-    get_ticker(symbol_string, ticker_period, ticker_interval, offset_value)
+    get_ticker(symbol_string, ticker_period, ticker_interval)
