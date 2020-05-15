@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img width="100" height="100" alt="Vue logo" src="./assets/logo.png">
-    <GetComponent/>
+    <v-app app>
+      <SystemBar></SystemBar>
+      <Navigation v-if="currentUser"></Navigation>
+      <Header></Header>
+      <Contents></Contents>
+      <Footer></Footer>
+    </v-app>
   </div>
 </template>
 
 <script>
-import GetComponent from './components/GetComponent.vue'
+  import { mapState } from 'vuex'
 
-export default {
-  name: 'App',
-  components: {
-    GetComponent
+  import Navigation from "@/components/shared/Navigation";
+  import SystemBar from "@/components/shared/SystemBar";
+  import Header from "@/components/shared/Header";
+  import Contents from "@/components/shared/Content";
+  import Footer from "@/components/shared/Footer";
+
+  export default {
+    components:{
+      SystemBar,
+      Navigation,
+      Header,
+      Contents,
+      Footer
+    },
+    computed: {
+      ...mapState(['currentUser'])
+    }
   }
-}
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+
 </style>
