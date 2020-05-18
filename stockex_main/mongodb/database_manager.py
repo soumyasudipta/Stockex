@@ -27,7 +27,6 @@ def drop_collection(database_name, collection_name):
 
 def read_from_database(symbol, database_name, collection_name):
     try:
-
         cursor = 0
         client = connection.establish_connection()
 

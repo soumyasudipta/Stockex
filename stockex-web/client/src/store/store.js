@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-const firebase = require('../firebaseConfig')
+const firebase = require('../database/FirebaseConfig')
 
 Vue.use(Vuex);
 

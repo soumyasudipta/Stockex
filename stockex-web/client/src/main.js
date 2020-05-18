@@ -1,13 +1,24 @@
+//Main components
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from "@/plugins/vuetify";
+import vuetify from "./plugins/vuetify";
 import Vuelidate from 'vuelidate'
-import Chart from "chart.js";
-import router from "@/router/router";
+
+// Database and Router
+import router from "./router/router";
 import { store } from './store/store.js'
-const firebase =  require("./firebaseConfig")
+const firebase =  require("./database/FirebaseConfig")
+
+// Fusion Chart
+import VueFusionCharts from 'vue-fusioncharts';
+import FusionCharts from 'fusioncharts';
+import TimeSeries from 'fusioncharts/fusioncharts.timeseries';
+
+
 
 Vue.use(Vuelidate)
+// register VueFusionCharts component
+Vue.use(VueFusionCharts, FusionCharts, TimeSeries);
 
 Vue.config.productionTip = false
 
@@ -18,7 +29,6 @@ firebase.auth.onAuthStateChanged(user => {
         app = new Vue({
             el: '#app',
             vuetify,
-            Chart,
             router,
             store,
             render: h => h(App)

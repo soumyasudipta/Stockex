@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 
-// firebase init goes here
+
 const config = {
     apiKey: "AIzaSyAx74C9R7qNyrrPC8LxoZgBDvSlPG8T-OY",
     authDomain: "stockex-soumyasudipta.firebaseapp.com",

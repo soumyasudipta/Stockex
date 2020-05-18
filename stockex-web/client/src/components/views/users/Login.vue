@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    const firebase = require('../../../firebaseConfig')
+    const firebase = require('../../../database/FirebaseConfig')
 
     import { validationMixin } from 'vuelidate'
     import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'

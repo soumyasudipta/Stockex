@@ -1,29 +1,31 @@
 # Import libraries
 import yfinance as yf
 import time
-import logging
 from mongodb.constants import database_name
 import mongodb.database_manager as mdb
 from yahoofinance.constants import symbols
 from logger import logging_manager
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor,wait, as_completed
 
 
 # Initialize
-def get_ticker(symbol_list, ticker_period, ticker_interval):
+def get_ticker(symbol_list_string, ticker_period, ticker_interval):
     try:
         data_to_insert = []
 
         ticker_data = yf.download(
-            tickers=symbol_list,
+            tickers=symbol_list_string,
             period=ticker_period,
             interval=ticker_interval,
             group_by='ticker',
             auto_adjust=True,
-            threads=32)
+            threads=True)
 
-        print("Insertion started for : " + ticker_period, sep=" || ")
+        print("Insertion started for : " + ticker_period)
 
-        for symbol in list(ticker_data.columns.levels[0]):
+        # Start getting data from downloaded data 
+        for symbol in ticker_data.columns.levels[0]:
 
             last_timestamp = mdb.read_from_database(symbol, database_name, ticker_period)
 
@@ -33,6 +35,7 @@ def get_ticker(symbol_list, ticker_period, ticker_interval):
                 epoch = int(time.mktime(time.strptime(date_time, pattern)))
 
                 if last_timestamp == 0 or last_timestamp < epoch:
+
                     data = {
                         '_id': symbol + '-' + str(epoch),
                         'symbol': str(symbol),
@@ -61,6 +64,18 @@ def change_ticker(ticker_period):
 
 # Initialize
 def initiate(ticker_period, ticker_interval):
-    symbol_string = ' '.join([str(symbol) for symbol in symbols])
 
-    get_ticker(symbol_string, ticker_period, ticker_interval)
+    symbol_list_string = ' '.join([str(symbol) for symbol in symbols])
+    # get_ticker(symbol_list_string, ticker_period, ticker_interval)
+
+
+
+    print("Starting ThreadPoolExecutor")
+
+    futures = []
+
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures.append(executor.submit( get_ticker,symbol_list_string, ticker_period, ticker_interval))
+
+    print(wait(futures))
+    print("All tasks complete")

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    const firebase =  require('../../firebaseConfig');
+    const firebase =  require('../../database/FirebaseConfig');
 
     export default {
         data: () => ({

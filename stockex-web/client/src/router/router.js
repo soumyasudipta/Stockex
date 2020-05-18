@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from "firebase";
 
-import Home from "@/components/views/Home";
-import Dashboard from "@/components/views/Dashboard";
-import Stock from "@/components/views/Stock";
-import SubStock from "@/components/views/SubStock";
-import Forex from "@/components/views/Forex";
-import MyAccount from "@/components/views/MyAccount";
-import Login from "@/components/views/users/Login";
-import Register from "@/components/views/users/Register";
+import Home from "../components/views/modules/Home";
+import Dashboard from "../components/views/modules/Dashboard";
+import Stock from "../components/views/modules/Stock";
+import SubStock from "../components/views/modules/SubStock";
+import Forex from "../components/views/modules/Forex";
+import MyAccount from "../components/views/modules/MyAccount";
+import Login from "../components/views/users/Login";
+import Register from "../components/views/users/Register";
 
 Vue.use(Router)
 

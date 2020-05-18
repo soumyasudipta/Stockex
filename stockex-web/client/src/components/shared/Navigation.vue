@@ -44,13 +44,12 @@
 
 <script>
     import { mapState } from 'vuex'
-    // const firebase = require("@/firebaseConfig");
 
     export default {
         data () {
             return {
                 drawer: true,
-                user: { name: 'Soumya Sudipta', avatar: 'https://randomuser.me/api/portraits/men/85.jpg' },
+                user: { name: 'User', avatar: 'https://randomuser.me/api/portraits/men/85.jpg' },
                 items: [
                     { title: 'Home', icon: 'mdi-home', to: '/' },
                     { title: 'Dashboard', icon: 'mdi-view-dashboard', to:'/dashboard' },
