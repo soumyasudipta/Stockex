@@ -53,6 +53,7 @@
                 items: [
                     { title: 'Home', icon: 'mdi-home', to: '/' },
                     { title: 'Dashboard', icon: 'mdi-view-dashboard', to:'/dashboard' },
+                    { title: 'Info', icon: 'mdi-information-variant', to:'/info' },
                     { title: 'Stocks', icon: 'mdi-chart-areaspline', to:'/stock' },
                     { title: 'Forex', icon: 'mdi-cash-multiple', to:'/forex' },
                     { title: 'My Account', icon: 'mdi-account', to:'/myaccount' },

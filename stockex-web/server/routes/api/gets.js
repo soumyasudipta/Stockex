@@ -7,18 +7,22 @@ const connection_string = encodeURI('mongodb+srv://stockex-webserver:419azSmIlay
 
 
 // Get Posts
+router.get('/financials/:stock', async (req, res) => {
+    const gets = await loadStockCollection('info');
+    res.send(await gets.find({_id:{$regex:req.params.stock}},{ projection:{_id:0,'data':1}}).toArray());
+});
+
 router.get('/:stock/:ticker', async (req, res) => {
-    const gets = await loadPostsCollection(req.params.ticker);
+    const gets = await loadStockCollection(req.params.ticker);
     res.send(await gets.find({_id:{$regex:req.params.stock}},{ projection:{_id:0,'open':1,'high':1,'close':1,'low':1,'timestamp':1,'volume':1}}).toArray());
 });
 
-
-async function loadPostsCollection(ticker){
+async function loadStockCollection(collection){
     const client = await mongodb.MongoClient.connect(connection_string, {
         useNewUrlParser: true
     });
 
-    return client.db('stockex').collection(ticker);
+    return client.db('stockex').collection(collection);
 }
 
 module.exports = router;

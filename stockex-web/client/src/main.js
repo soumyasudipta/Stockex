@@ -15,7 +15,6 @@ import FusionCharts from 'fusioncharts';
 import TimeSeries from 'fusioncharts/fusioncharts.timeseries';
 
 
-
 Vue.use(Vuelidate)
 // register VueFusionCharts component
 Vue.use(VueFusionCharts, FusionCharts, TimeSeries);

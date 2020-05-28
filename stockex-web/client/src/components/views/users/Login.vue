@@ -81,14 +81,14 @@
                 if (!this.$v.email.$dirty) return errors
                 !this.$v.email.email && errors.push('Must be valid e-mail')
                 !this.$v.email.required && errors.push('E-mail is required')
-                !this.$v.email.maxLength && errors.push('Email must be at most 30 characters long')
+                !this.$v.email.maxLength && errors.push('Email must be at most 50 characters long')
                 return errors
             },
             passwordErrors () {
                 const errors = []
                 if (!this.$v.password.$dirty) return errors
                 !this.$v.password.required && errors.push('Password is required')
-                !this.$v.password.minLength && errors.push('Must be valid password')
+                !this.$v.password.minLength && errors.push('Must be valid Password')
                 return errors
             }
         },

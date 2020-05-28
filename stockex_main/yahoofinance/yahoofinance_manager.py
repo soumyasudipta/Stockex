@@ -5,12 +5,11 @@ from mongodb.constants import database_name
 import mongodb.database_manager as mdb
 from yahoofinance.constants import symbols
 from logger import logging_manager
-import concurrent.futures
-from concurrent.futures import ThreadPoolExecutor,wait, as_completed
 
 
 # Initialize
-def get_ticker(symbol_list_string, ticker_period, ticker_interval):
+def get_ticker_data(symbol_list_string, ticker_period, ticker_interval):
+
     try:
         data_to_insert = []
 
@@ -57,6 +56,31 @@ def get_ticker(symbol_list_string, ticker_period, ticker_interval):
     except Exception as e:
         logging_manager.logging_do(e, 40)
 
+def get_info_data():
+
+    print("Insertion started for : Stock Info")
+
+    data_to_insert = []
+
+    for symbol in symbols:
+        try:
+            company_info = yf.Ticker(symbol).info
+
+            data = {
+                '_id': symbol,
+                'data': company_info
+            }
+
+            data_to_insert.append(data)
+
+        except Exception as e:
+            logging_manager.logging_do(e, 40)
+
+    if len(data_to_insert) > 0:
+        mdb.write_to_database(data_to_insert, database_name, info)
+   
+    print("Insertion ended for Stock Info")
+
 
 def change_ticker(ticker_period):
     mdb.drop_collection(database_name, ticker_period)
@@ -66,16 +90,4 @@ def change_ticker(ticker_period):
 def initiate(ticker_period, ticker_interval):
 
     symbol_list_string = ' '.join([str(symbol) for symbol in symbols])
-    # get_ticker(symbol_list_string, ticker_period, ticker_interval)
-
-
-
-    print("Starting ThreadPoolExecutor")
-
-    futures = []
-
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures.append(executor.submit( get_ticker,symbol_list_string, ticker_period, ticker_interval))
-
-    print(wait(futures))
-    print("All tasks complete")
+    get_ticker_data(symbol_list_string, ticker_period, ticker_interval)

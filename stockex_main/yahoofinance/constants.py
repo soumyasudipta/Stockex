@@ -1,4 +1,4 @@
-import pandas as pd
+# import pandas as pd
 
 symbols = ['ATVI', 'ADBE', 'AMD', 'ALXN', 'ALGN', 'GOOGL', 'GOOG', 'AMZN', 'AAL', 'AMGN',
            'ADI', 'ANSS', 'AAPL', 'AMAT', 'ASML', 'ADSK', 'ADP', 'BIDU', 'BIIB', 'BMRN',
@@ -28,6 +28,5 @@ period_max = 'max'
 interval_1d = '1d'
 interval_1m = '1m'
 
-# Offset value
-offset_1d = 0
-offset_1m = 1
+# Info
+info = 'info'

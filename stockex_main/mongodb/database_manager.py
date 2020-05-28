@@ -1,13 +1,13 @@
+# Import libraries
+import mongodb.connection as connection
 from pymongo import errors
 from logger import logging_manager
-import mongodb.connection as connection
 
-
+# Write to mongo database
 def write_to_database(data, database_name, collection_name):
     try:
         client = connection.establish_connection()
-        client[database_name][collection_name].insert_many(data,
-                                                           ordered=False)
+        client[database_name][collection_name].insert_many(data, ordered=False)
         connection.end_connection(client)
 
     except errors.WriteError as e:
@@ -15,6 +15,7 @@ def write_to_database(data, database_name, collection_name):
         print(e)
 
 
+# Drop collection from mongodb
 def drop_collection(database_name, collection_name):
     try:
         client = connection.establish_connection()
@@ -25,6 +26,7 @@ def drop_collection(database_name, collection_name):
         logging_manager.logging_do(e, 40)
 
 
+# Read from mongo database
 def read_from_database(symbol, database_name, collection_name):
     try:
         cursor = 0

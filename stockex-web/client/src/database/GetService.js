@@ -4,7 +4,7 @@ const url = '/api/gets'
 
 class GetService {
     // Get Posts
-    static getPosts(stock, ticker) {
+    static getStockPrice(stock, ticker) {
         return new Promise ((resolve,reject) => {
             axios.get(`${url}/${stock}/${ticker}`).then((res) => {
                 const data = res.data;
@@ -21,19 +21,22 @@ class GetService {
         });
     }
 
-
-    // Created Post
-    static insertPost(text) {
-        return axios.post(url, {
-            text
-        });
-    }
-
-
-    // Delete Post
-    static deletePost(id) {
-        return axios.delete(`${url}${id}`);
+    static getFinancials(stock) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${url}/financials/${stock}`).then((res) => {
+                const data = res.data;
+                resolve(
+                    data.map(get => ({
+                        ...get,
+                    }))
+                )
+            })
+                .catch((err)=>{
+                    reject(err)
+                })
+        })
     }
 }
+
 
 export default GetService;

@@ -17,6 +17,7 @@ def establish_connection():
         logging_manager.logging_do(e, 40)
 
 
+# Function to disconnect from mongodb server
 def end_connection(client):
     try:
         client.close()

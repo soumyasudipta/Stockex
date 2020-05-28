@@ -12,6 +12,7 @@
     "core-js": "^3.6.4",
     "firebase": "^7.14.3",
     "fusioncharts": "^3.15.1-sr.1",
+    "nuxt": "^2.12.2",
     "path": "^0.12.7",
     "vue": "^2.6.11",
     "vue-fusioncharts": "^3.0.4",

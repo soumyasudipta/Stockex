@@ -10,6 +10,7 @@ import Forex from "../components/views/modules/Forex";
 import MyAccount from "../components/views/modules/MyAccount";
 import Login from "../components/views/users/Login";
 import Register from "../components/views/users/Register";
+import Info from "../components/views/modules/Info";
 
 Vue.use(Router)
 
@@ -23,6 +24,7 @@ const router = new Router({
         { path: '/stock/:id', name: 'SubStocks', component: SubStock, meta: { requiresAuth: true }},
         { path: '/forex', name: 'Forex', component: Forex, meta: { requiresAuth: true }},
         { path: '/myaccount', name: 'MyAccount', component: MyAccount, meta: { requiresAuth: true }},
+        { path: '/info', name: 'Info', component: Info, meta: { requiresAuth: true }},
         { path: '/register', name: 'Register', component: Register},
         { path: '/login', name: 'Login', component: Login},
     ]
