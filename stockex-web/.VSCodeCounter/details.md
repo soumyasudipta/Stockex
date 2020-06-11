@@ -1,10 +1,10 @@
 # Details
 
-Date : 2020-05-19 18:39:50
+Date : 2020-05-19 18:17:16
 
-Directory c:\Users\soumy\Documents\GitHub\Stockex\stockex-web
+Directory c:\Users\soumy\Documents\Heroku\stockex-web
 
-Total : 31 files,  14183 codes, 17 comments, 73 blanks, all 14273 lines
+Total : 36 files,  15834 codes, 1185 comments, 73 blanks, all 17092 lines
 
 [summary](results.md)
 
@@ -33,7 +33,7 @@ Total : 31 files,  14183 codes, 17 comments, 73 blanks, all 14273 lines
 | [client/src/database/GetService.js](/client/src/database/GetService.js) | JavaScript | 28 | 3 | 8 | 39 |
 | [client/src/main.js](/client/src/main.js) | JavaScript | 25 | 5 | 7 | 37 |
 | [client/src/plugins/vuetify.js](/client/src/plugins/vuetify.js) | JavaScript | 5 | 0 | 3 | 8 |
-| [client/src/router/router.js](/client/src/router/router.js) | JavaScript | 33 | 1 | 6 | 40 |
+| [client/src/router/router.js](/client/src/router/router.js) | JavaScript | 35 | 1 | 6 | 42 |
 | [client/src/store/store.js](/client/src/store/store.js) | JavaScript | 40 | 0 | 4 | 44 |
 | [client/vue.config.js](/client/vue.config.js) | JavaScript | 14 | 0 | 2 | 16 |
 | [package-lock.json](/package-lock.json) | JSON | 505 | 0 | 1 | 506 |
@@ -41,6 +41,11 @@ Total : 31 files,  14183 codes, 17 comments, 73 blanks, all 14273 lines
 | [server/index.js](/server/index.js) | JavaScript | 14 | 4 | 11 | 29 |
 | [server/package-lock.json](/server/package-lock.json) | JSON | 505 | 0 | 1 | 506 |
 | [server/package.json](/server/package.json) | JSON | 18 | 0 | 1 | 19 |
+| [server/public/css/app.47d99304.css](/server/public/css/app.47d99304.css) | CSS | 1 | 0 | 0 | 1 |
+| [server/public/css/chunk-vendors.4e67f1e1.css](/server/public/css/chunk-vendors.4e67f1e1.css) | CSS | 1 | 0 | 0 | 1 |
+| [server/public/index.html](/server/public/index.html) | HTML | 1 | 0 | 0 | 1 |
+| [server/public/js/app.e11b089c.js](/server/public/js/app.e11b089c.js) | JavaScript | 1 | 1 | 0 | 2 |
+| [server/public/js/chunk-vendors.499ffc05.js](/server/public/js/chunk-vendors.499ffc05.js) | JavaScript | 1,645 | 1,167 | 0 | 2,812 |
 | [server/routes/api/gets.js](/server/routes/api/gets.js) | JavaScript | 15 | 2 | 7 | 24 |
 
 [summary](results.md)

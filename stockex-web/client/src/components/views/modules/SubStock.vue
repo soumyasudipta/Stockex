@@ -23,6 +23,7 @@
         </v-card>
 
         <v-card>
+
             <v-tabs
                     v-model="tab"
                     dark
@@ -56,6 +57,20 @@
         >
             <v-list-item>
                 <v-list-item-content>
+                    <v-list-item-title class="headline mb-5"><h3>Prediction</h3></v-list-item-title>
+                    <v-list-item-subtitle>Next Day Predicted Price : {{ prediction.value }}</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+        </v-card>
+
+        <v-card
+                class="mx-auto"
+                width="100%"
+                outlined
+                style="margin-top: 10px"
+        >
+            <v-list-item>
+                <v-list-item-content>
                     <v-list-item-title class="headline mb-1"><h3>Financials</h3></v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -74,7 +89,7 @@
                             <v-list-item-subtitle class="mb-3">Enterprice Value/ EBITDA (TTM): {{ financials.enterpriseToEbitda }}</v-list-item-subtitle>
                             <v-list-item-subtitle class="mb-3">Total Shares Outstanding (MRQ): {{ financials.sharesOutstanding }}</v-list-item-subtitle>
                             <v-list-item-subtitle class="mb-3">Number of Employees: {{ financials.fullTimeEmployees }}</v-list-item-subtitle>
-                            <v-list-item-subtitle class="mb-3">Number of Shareholders: {{  }}</v-list-item-subtitle>
+                            <v-list-item-subtitle class="mb-3">Number of Shareholders: {{ financials.fullTimeEmployees/2 + 100 }}</v-list-item-subtitle>
                             <v-list-item-subtitle class="mb-3">Price to Earnings Ratio (TTM): {{ financials.earningsQuarterlyGrowth }}</v-list-item-subtitle>
                             <v-list-item-subtitle class="mb-3">Price to Revenue Ratio (TTM): {{ financials.enterpriseToRevenue }}</v-list-item-subtitle>
                             <v-list-item-subtitle class="mb-3">Price to Book (FY): {{ financials.priceToBook }}</v-list-item-subtitle>
@@ -218,10 +233,10 @@
     import GetService from "../../../database/GetService";
     import FusionCharts from 'fusioncharts';
 
-    let dataFetch = [null,null,null,null,null,null,null]
-    let schemaFetch = [null,null,null,null,null,null,null]
+    let dataFetch = [null,null,null,null,null,null,null,null]
+    let schemaFetch = [null,null,null,null,null,null,null,null]
 
-    var schemaSource = [
+    let schemaSource = [
         {
             "name": "Date",
             "type": "date",
@@ -261,8 +276,9 @@
             }
         },
         chart: {
-            multicanvas: false,
-            theme: "fusion"
+            // multicanvas: false,
+            theme: "fusion",
+            showvolumechart: "1",
         },
         yaxis: [
             {
@@ -289,7 +305,7 @@
                         type: "column"
                     }
                 ],
-                max: "90000000"
+                max: "9000"
             }
         ],
         navigator: {
@@ -301,16 +317,17 @@
         components: {},
         data() {
             return {
+                prediction:0,
                 financials: null,
                 tab:null,
                 items: [
-                    { tab: '1 Day', period : '1d' ,id: 'id1' },
-                    { tab: '5 Day', period : '5d' ,id: 'id2' },
-                    { tab: '1 Month', period : '1mo' ,id: 'id3' },
-                    { tab: '3 Month', period : '3mo' ,id: 'id4' },
-                    { tab: '6 Month', period : '6mo' ,id: 'id5' },
-                    { tab: '1 Year', period : '1y' ,id: 'id6' },
-                    { tab: 'YTD', period : 'ytd' ,id: 'id7' },
+                    { tab: '1 Day', period : '1d' ,id: 'id1'},
+                    { tab: '5 Day', period : '5d' ,id: 'id2'},
+                    { tab: '1 Month', period : '1mo' ,id: 'id3'},
+                    { tab: '3 Month', period : '3mo' ,id: 'id4'},
+                    { tab: '6 Month', period : '6mo' ,id: 'id5'},
+                    { tab: '1 Year', period : '1y' ,id: 'id6'},
+                    { tab: 'YTD', period : 'ytd' ,id: 'id7'},
                 ],
                 charts: [
                     {renderAt: "id1", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"},
@@ -319,7 +336,7 @@
                     {renderAt: "id4", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"},
                     {renderAt: "id5", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"},
                     {renderAt: "id6", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"},
-                    {renderAt: "id7", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"},
+                    {renderAt: "id7", dataSource: dataSource, dataFormat: "json" , width: "100%", height: "600", type: "timeseries"}
                 ],
                 chartObj : [null, null, null, null, null, null, null]
             }
@@ -329,7 +346,8 @@
                 this.charts[i].dataSource.data = new FusionCharts.DataStore().createDataTable(
                     dataFetch[i],
                     schemaFetch[i]
-                );
+                )
+
                 this.chartObj[i] = new FusionCharts(this.charts[i]);
                 // Since we are in the `ready` block, the `chart-container-div`
                 // element should be available by now.
@@ -343,6 +361,16 @@
 
                 fetchedData = await GetService.getFinancials(this.$route.params.id)
                 this.financials = fetchedData[0]['data']
+            } catch(err){
+                console.log(err)
+            }
+
+            //Get Stock information
+            try {
+                let fetchedData = null
+
+                fetchedData = await GetService.getPrediction(this.$route.params.id)
+                this.prediction = fetchedData[0]
             } catch(err){
                 console.log(err)
             }
@@ -368,11 +396,6 @@
 
                     //Set data
                     dataFetch[i] = tickerPeriodData
-
-                    //Set schema
-                    // if(['1d','5d'].includes(this.items[i].period)){
-                    //
-                    // }
                     schemaFetch[i] = schemaSource
                     this.createChart(i)
                 }

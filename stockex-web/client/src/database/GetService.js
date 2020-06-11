@@ -36,6 +36,22 @@ class GetService {
                 })
         })
     }
+
+    static getPrediction(stock) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${url}/prediction/${stock}`).then((res) => {
+                const data = res.data;
+                resolve(
+                    data.map(get => ({
+                        ...get,
+                    }))
+                )
+            })
+                .catch((err)=>{
+                    reject(err)
+                })
+        })
+    }
 }
 
 

@@ -163,7 +163,7 @@
                     this.userProfile.wishlist.splice(index, 1);
                 }
 
-                db.set({
+                db.update({
                     wishlist : this.userProfile.wishlist
                 })
             },

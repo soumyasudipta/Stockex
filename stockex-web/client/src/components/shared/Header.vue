@@ -9,11 +9,13 @@
         <v-toolbar-title>Stockex</v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-btn @click="logout">Logout</v-btn>
+        <v-btn @click="logout" v-if="currentUser">Logout</v-btn>
     </v-app-bar>
 </template>
 
 <script>
+    import {mapState} from "vuex";
+
     const firebase =  require('../../database/FirebaseConfig');
 
     export default {
@@ -29,6 +31,9 @@
                     console.log(err)
                 })
             }
+        },
+        computed: {
+            ...mapState(['currentUser'])
         }
     }
 </script>

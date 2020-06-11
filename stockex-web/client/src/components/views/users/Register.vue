@@ -1,6 +1,7 @@
 <template>
     <v-app app>
         <v-card
+                style="margin-top: 200px"
                 class="mx-auto text-center"
                 width="500"
                 min-width="40%"
